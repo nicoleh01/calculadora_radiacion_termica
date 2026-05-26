@@ -1,661 +1,465 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-<title>Calculadora de Radiación Térmica</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
-
-html{
-    width:100%;
-    overflow-x:hidden;
-}
-
-body{
-
-    width:100%;
-    overflow-x:hidden;
-
-    background:
-    linear-gradient(135deg,#020617,#0f172a,#111827);
-
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-
-    padding:10px;
-}
-
-/* CONTENEDOR */
-
-.container{
-
-    width:100%;
-    max-width:1200px;
-
-    display:flex;
-    flex-wrap:wrap;
-
-    background:rgba(255,255,255,.05);
-
-    border-radius:25px;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.45);
-}
-
-/* COLUMNAS */
-
-.left,
-.right{
-
-    flex:1 1 500px;
-
-    padding:40px;
-}
-
-/* IZQUIERDA */
-
-.left{
-
-    background:
-    linear-gradient(
-    180deg,
-    rgba(255,255,255,.04),
-    rgba(255,255,255,.02)
-    );
-}
-
-.badge{
-
-    display:inline-block;
-
-    padding:10px 18px;
-
-    border-radius:50px;
-
-    background:rgba(255,255,255,.08);
-
-    color:white;
-
-    margin-bottom:25px;
-
-    font-size:14px;
-}
-
-.left h1{
-
-    font-size:55px;
-
-    line-height:1.1;
-
-    color:white;
-
-    margin-bottom:20px;
-
-    font-weight:800;
-}
-
-.left h1 span{
-
-    background:
-    linear-gradient(90deg,#f97316,#ef4444);
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-}
-
-.left p{
-
-    color:#cbd5e1;
-
-    line-height:1.8;
-
-    font-size:17px;
-
-    margin-bottom:35px;
-}
-
-/* INFO */
-
-.info-box{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
-}
-
-.info-card{
-
-    padding:22px;
-
-    border-radius:22px;
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.06);
-}
-
-.info-card h3{
-
-    color:#facc15;
-
-    margin-bottom:10px;
-
-    font-size:24px;
-}
-
-.info-card p{
-
-    color:#cbd5e1;
-
-    line-height:1.6;
-
-    font-size:15px;
-}
-
-/* DERECHA */
-
-.right{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-}
-
-.calculator{
-
-    width:100%;
-
-    max-width:420px;
-}
-
-/* ICONO */
-
-.icon{
-
-    width:100px;
-    height:100px;
-
-    border-radius:28px;
-
-    margin:auto auto 30px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:50px;
-
-    background:
-    linear-gradient(135deg,#f97316,#ef4444);
-
-    box-shadow:
-    0 15px 40px rgba(249,115,22,.4);
-}
-
-/* TITULO */
-
-.calculator h2{
-
-    text-align:center;
-
-    color:white;
-
-    font-size:42px;
-
-    margin-bottom:35px;
-}
-
-/* INPUTS */
-
-.input-group{
-
-    margin-bottom:22px;
-}
-
-.input-group label{
-
-    display:block;
-
-    margin-bottom:10px;
-
-    color:#fff;
-
-    font-size:16px;
-
-    font-weight:600;
-}
-
-.input-box input{
-
-    width:100%;
-
-    height:58px;
-
-    border:none;
-
-    outline:none;
-
-    border-radius:18px;
-
-    background:rgba(255,255,255,.07);
-
-    padding:0 18px;
-
-    color:white;
-
-    font-size:16px;
-
-    transition:.3s;
-}
-
-.input-box input:focus{
-
-    background:rgba(255,255,255,.1);
-
-    border:1px solid rgba(255,255,255,.18);
-}
-
-.input-box input::placeholder{
-
-    color:#94a3b8;
-}
-
-/* BOTON */
-
-button{
-
-    width:100%;
-
-    padding:18px;
-
-    border:none;
-
-    border-radius:18px;
-
-    background:
-    linear-gradient(135deg,#f97316,#ef4444);
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    margin-top:10px;
-
-    transition:.3s;
-}
-
-button:hover{
-
-    transform:translateY(-2px);
-}
-
-/* RESULTADO */
-
-.resultado{
-
-    display:none;
-
-    margin-top:25px;
-
-    padding:25px;
-
-    border-radius:22px;
-
-    background:rgba(255,255,255,.05);
-
-    text-align:center;
-}
-
-.resultado h3{
-
-    color:#facc15;
-
-    margin-bottom:10px;
-}
-
-.resultado p{
-
-    color:white;
-
-    font-size:34px;
-
-    font-weight:800;
-
-    word-break:break-word;
-}
-
-/* FORMULA */
-
-.formula{
-
-    margin-top:25px;
-
-    text-align:center;
-
-    color:#cbd5e1;
-
-    line-height:1.8;
-}
-
-.formula strong{
-
-    color:white;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:768px){
-
-    body{
-        padding:0;
-    }
-
-    .container{
-
-        width:100%;
-
-        border-radius:0;
-
-        min-height:100vh;
-    }
-
-    .left,
-    .right{
-
-        width:100%;
-
-        padding:28px;
-    }
-
-    .left h1{
-
-        font-size:40px;
-    }
-
-    .left p{
-
-        font-size:15px;
-    }
-
-    .calculator{
-
-        max-width:100%;
-    }
-
-    .calculator h2{
-
-        font-size:30px;
-    }
-
-    .icon{
-
-        width:85px;
-        height:85px;
-
-        font-size:42px;
-    }
-
-    .resultado p{
-
-        font-size:26px;
-    }
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Calculadora de Radiación Térmica</title>
+
+    <style>
+        :root {
+            --bg: #07111f;
+            --panel: rgba(255, 255, 255, .06);
+            --panel-strong: rgba(255, 255, 255, .1);
+            --line: rgba(255, 255, 255, .12);
+            --text: #ffffff;
+            --muted: #cbd5e1;
+            --accent: #f97316;
+            --accent-2: #ef4444;
+            --gold: #facc15;
+            --cyan: #22d3ee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100svh;
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(34, 211, 238, .18), transparent 28rem),
+                radial-gradient(circle at 88% 8%, rgba(249, 115, 22, .18), transparent 24rem),
+                linear-gradient(135deg, #020617, var(--bg), #111827);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(14px, 3vw, 32px);
+        }
+
+        .container {
+            width: min(100%, 1180px);
+            min-height: min(760px, calc(100svh - 28px));
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: clamp(18px, 3vw, 28px);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+            backdrop-filter: blur(18px);
+        }
+
+        .left,
+        .right {
+            min-width: 0;
+            padding: clamp(24px, 5vw, 54px);
+        }
+
+        .left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+        }
+
+        .badge {
+            width: fit-content;
+            max-width: 100%;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .09);
+            color: var(--text);
+            margin-bottom: 24px;
+            font-size: clamp(13px, 2vw, 14px);
+            line-height: 1.25;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .left h1 {
+            max-width: 720px;
+            font-size: clamp(38px, 7vw, 66px);
+            line-height: 1.05;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .left h1 span {
+            display: block;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .left > p {
+            max-width: 620px;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: clamp(15px, 2.2vw, 18px);
+            margin-bottom: 34px;
+        }
+
+        .info-box {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .info-card {
+            min-height: 132px;
+            padding: clamp(18px, 3vw, 24px);
+            border-radius: 18px;
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .info-card h3 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: clamp(20px, 3vw, 24px);
+            line-height: 1.2;
+        }
+
+        .info-card p {
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calculator {
+            width: min(100%, 440px);
+        }
+
+        .icon {
+            width: clamp(82px, 12vw, 104px);
+            aspect-ratio: 1;
+            border-radius: 24px;
+            margin: 0 auto 28px;
+            display: grid;
+            place-items: center;
+            font-size: clamp(40px, 8vw, 54px);
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 15px 40px rgba(249, 115, 22, .36);
+        }
+
+        .calculator h2 {
+            text-align: center;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .input-box input {
+            width: 100%;
+            min-height: 56px;
+            border: 1px solid transparent;
+            outline: none;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .08);
+            padding: 0 18px;
+            color: var(--text);
+            font-size: 16px;
+            transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .input-box input:focus {
+            background: var(--panel-strong);
+            border-color: rgba(34, 211, 238, .55);
+            box-shadow: 0 0 0 4px rgba(34, 211, 238, .12);
+        }
+
+        .input-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        button {
+            width: 100%;
+            min-height: 58px;
+            padding: 16px 18px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: var(--text);
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: transform .2s ease, filter .2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        button:focus-visible {
+            outline: 3px solid rgba(34, 211, 238, .75);
+            outline-offset: 3px;
+        }
+
+        .resultado {
+            display: none;
+            margin-top: 24px;
+            padding: 22px;
+            border-radius: 18px;
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, .08);
+            text-align: center;
+        }
+
+        .resultado h3 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .resultado p {
+            color: var(--text);
+            font-size: clamp(26px, 5vw, 34px);
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .formula {
+            margin-top: 24px;
+            text-align: center;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 15px;
+        }
+
+        .formula strong {
+            color: var(--text);
+            font-size: 17px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                align-items: flex-start;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .left {
+                padding-bottom: 22px;
+            }
+
+            .right {
+                padding-top: 22px;
+                align-items: flex-start;
+            }
+
+            .info-box {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            body {
+                padding: 0;
+                align-items: stretch;
+            }
+
+            .container {
+                width: 100%;
+                min-height: 100svh;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
+            }
+
+            .left,
+            .right {
+                padding: 24px 18px;
+            }
+
+            .badge {
+                white-space: normal;
+            }
+
+            .info-box {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                min-height: auto;
+            }
+
+            .calculator {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <main class="container">
+        <section class="left" aria-labelledby="titulo-principal">
+            <div class="badge">⚡ Física · Transferencia de Calor</div>
 
-<div class="container">
+            <h1 id="titulo-principal">
+                Calculadora de
+                <span>Radiación Térmica</span>
+            </h1>
 
-    <!-- IZQUIERDA -->
+            <p>
+                Calcula la potencia radiada utilizando la Ley de Stefan-Boltzmann
+                con una interfaz moderna, elegante y adaptable para celular, tablet
+                y computador.
+            </p>
 
-    <div class="left">
+            <div class="info-box">
+                <article class="info-card">
+                    <h3>🔥 Precisión</h3>
+                    <p>Resultados rápidos basados en física térmica.</p>
+                </article>
 
-        <div class="badge">
-            ⚡ Física · Transferencia de Calor
-        </div>
-
-        <h1>
-            Calculadora de
-            <span>Radiación Térmica</span>
-        </h1>
-
-        <p>
-            Calcula la potencia radiada utilizando
-            la Ley de Stefan-Boltzmann con una
-            interfaz moderna, elegante y adaptable
-            para celular, tablet y computador.
-        </p>
-
-        <div class="info-box">
-
-            <div class="info-card">
-
-                <h3>🔥 Precisión</h3>
-
-                <p>
-                    Resultados rápidos basados
-                    en física térmica.
-                </p>
-
+                <article class="info-card">
+                    <h3>⚙️ Fórmula</h3>
+                    <p>P = ε · σ · A · T⁴</p>
+                </article>
             </div>
+        </section>
 
-            <div class="info-card">
+        <section class="right" aria-label="Formulario de cálculo">
+            <div class="calculator">
+                <div class="icon" aria-hidden="true">🔥</div>
 
-                <h3>⚙️ Fórmula</h3>
+                <h2>Calcular Potencia</h2>
 
-                <p>
-                    P = ε · σ · A · T⁴
-                </p>
+                <form id="formularioRadiacion">
+                    <div class="input-group">
+                        <label for="emisividad">Emisividad (ε)</label>
+                        <div class="input-box">
+                            <input
+                                type="number"
+                                id="emisividad"
+                                min="0"
+                                max="1"
+                                placeholder="Ej: 0.95"
+                                step="0.01"
+                                inputmode="decimal"
+                                required>
+                        </div>
+                    </div>
 
-            </div>
+                    <div class="input-group">
+                        <label for="area">Área (m²)</label>
+                        <div class="input-box">
+                            <input
+                                type="number"
+                                id="area"
+                                min="0"
+                                placeholder="Ej: 2.5"
+                                step="0.01"
+                                inputmode="decimal"
+                                required>
+                        </div>
+                    </div>
 
-        </div>
+                    <div class="input-group">
+                        <label for="temperatura">Temperatura (K)</label>
+                        <div class="input-box">
+                            <input
+                                type="number"
+                                id="temperatura"
+                                min="0"
+                                placeholder="Ej: 300"
+                                step="0.01"
+                                inputmode="decimal"
+                                required>
+                        </div>
+                    </div>
 
-    </div>
+                    <button type="submit">CALCULAR RADIACIÓN</button>
+                </form>
 
-    <!-- DERECHA -->
-
-    <div class="right">
-
-        <div class="calculator">
-
-            <div class="icon">
-                🔥
-            </div>
-
-            <h2>
-                Calcular Potencia
-            </h2>
-
-            <!-- EMISIVIDAD -->
-
-            <div class="input-group">
-
-                <label>
-                    Emisividad (ε)
-                </label>
-
-                <div class="input-box">
-
-                    <input
-                    type="number"
-                    id="emisividad"
-                    placeholder="Ej: 0.95"
-                    step="0.01">
-
+                <div class="resultado" id="resultado" aria-live="polite">
+                    <h3>Potencia Radiada</h3>
+                    <p id="valorResultado">0 W</p>
                 </div>
 
-            </div>
-
-            <!-- AREA -->
-
-            <div class="input-group">
-
-                <label>
-                    Área (m²)
-                </label>
-
-                <div class="input-box">
-
-                    <input
-                    type="number"
-                    id="area"
-                    placeholder="Ej: 2.5"
-                    step="0.01">
-
+                <div class="formula">
+                    <strong>P = ε · σ · A · T⁴</strong>
+                    <br>
+                    σ = 5.67 × 10⁻⁸ W/m²K⁴
                 </div>
-
             </div>
+        </section>
+    </main>
 
-            <!-- TEMPERATURA -->
+    <script>
+        const formulario = document.getElementById("formularioRadiacion");
 
-            <div class="input-group">
+        formulario.addEventListener("submit", function (event) {
+            event.preventDefault();
+            calcularRadiacion();
+        });
 
-                <label>
-                    Temperatura (K)
-                </label>
+        function calcularRadiacion() {
+            const emisividad = parseFloat(document.getElementById("emisividad").value);
+            const area = parseFloat(document.getElementById("area").value);
+            const temperatura = parseFloat(document.getElementById("temperatura").value);
+            const sigma = 5.67e-8;
 
-                <div class="input-box">
+            if (
+                Number.isNaN(emisividad) ||
+                Number.isNaN(area) ||
+                Number.isNaN(temperatura)
+            ) {
+                alert("Completa todos los campos");
+                return;
+            }
 
-                    <input
-                    type="number"
-                    id="temperatura"
-                    placeholder="Ej: 300">
+            if (emisividad < 0 || emisividad > 1) {
+                alert("La emisividad debe estar entre 0 y 1");
+                return;
+            }
 
-                </div>
+            if (area <= 0 || temperatura <= 0) {
+                alert("El área y la temperatura deben ser mayores que 0");
+                return;
+            }
 
-            </div>
+            const potencia = emisividad * sigma * area * Math.pow(temperatura, 4);
 
-            <!-- BOTON -->
-
-            <button onclick="calcularRadiacion()">
-
-                CALCULAR RADIACIÓN
-
-            </button>
-
-            <!-- RESULTADO -->
-
-            <div class="resultado" id="resultado">
-
-                <h3>
-                    Potencia Radiada
-                </h3>
-
-                <p id="valorResultado">
-
-                    0 W
-
-                </p>
-
-            </div>
-
-            <!-- FORMULA -->
-
-            <div class="formula">
-
-                <strong>
-                    P = ε · σ · A · T⁴
-                </strong>
-
-                <br>
-
-                σ = 5.67 × 10⁻⁸ W/m²K⁴
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script>
-
-function calcularRadiacion(){
-
-    const emisividad =
-    parseFloat(
-    document.getElementById("emisividad").value
-    );
-
-    const area =
-    parseFloat(
-    document.getElementById("area").value
-    );
-
-    const temperatura =
-    parseFloat(
-    document.getElementById("temperatura").value
-    );
-
-    const sigma = 5.67e-8;
-
-    if(
-        isNaN(emisividad) ||
-        isNaN(area) ||
-        isNaN(temperatura)
-    ){
-
-        alert("Completa todos los campos");
-
-        return;
-    }
-
-    const potencia =
-
-    emisividad *
-    sigma *
-    area *
-    Math.pow(temperatura,4);
-
-    document.getElementById("resultado")
-    .style.display = "block";
-
-    document.getElementById("valorResultado")
-    .innerHTML =
-
-    potencia.toLocaleString("es-CO",{
-
-        maximumFractionDigits:2
-
-    }) + " W";
-}
-
-</script>
-
+            document.getElementById("resultado").style.display = "block";
+            document.getElementById("valorResultado").textContent =
+                potencia.toLocaleString("es-CO", {
+                    maximumFractionDigits: 2
+                }) + " W";
+        }
+    </script>
 </body>
 </html>
