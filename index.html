@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Calculadora de Radiación Térmica</title>
 
 <style>
-
-/* RESET */
 
 *{
     margin:0;
@@ -20,18 +19,17 @@ content="width=device-width, initial-scale=1.0">
     font-family:'Segoe UI',sans-serif;
 }
 
-html,body{
+html{
     width:100%;
     overflow-x:hidden;
 }
 
-/* BODY */
-
 body{
 
+    width:100%;
+    overflow-x:hidden;
+
     background:
-    radial-gradient(circle at top left,#ff6b00 0%,transparent 25%),
-    radial-gradient(circle at bottom right,#2563eb 0%,transparent 30%),
     linear-gradient(135deg,#020617,#0f172a,#111827);
 
     min-height:100vh;
@@ -40,84 +38,56 @@ body{
     justify-content:center;
     align-items:flex-start;
 
-    padding:20px;
-}
-
-/* EFECTOS */
-
-body::before,
-body::after{
-    content:"";
-    position:fixed;
-    width:300px;
-    height:300px;
-    border-radius:50%;
-    filter:blur(120px);
-    z-index:0;
-}
-
-body::before{
-    background:#ff5e00;
-    top:-100px;
-    left:-100px;
-    opacity:.35;
-}
-
-body::after{
-    background:#2563eb;
-    bottom:-100px;
-    right:-100px;
-    opacity:.35;
+    padding:10px;
 }
 
 /* CONTENEDOR */
 
 .container{
 
-    position:relative;
-    z-index:2;
-
     width:100%;
     max-width:1200px;
 
-    display:grid;
-    grid-template-columns:1fr 1fr;
+    display:flex;
+    flex-wrap:wrap;
 
-    background:rgba(255,255,255,.06);
+    background:rgba(255,255,255,.05);
 
-    border:1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(18px);
-
-    border-radius:35px;
+    border-radius:25px;
 
     overflow:hidden;
 
+    border:1px solid rgba(255,255,255,.08);
+
     box-shadow:
-    0 20px 60px rgba(0,0,0,.5);
+    0 20px 60px rgba(0,0,0,.45);
+}
+
+/* COLUMNAS */
+
+.left,
+.right{
+
+    flex:1 1 500px;
+
+    padding:40px;
 }
 
 /* IZQUIERDA */
 
 .left{
 
-    padding:60px;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-
     background:
     linear-gradient(
     180deg,
-    rgba(255,255,255,.05),
+    rgba(255,255,255,.04),
     rgba(255,255,255,.02)
     );
 }
 
 .badge{
 
-    width:fit-content;
+    display:inline-block;
 
     padding:10px 18px;
 
@@ -125,9 +95,7 @@ body::after{
 
     background:rgba(255,255,255,.08);
 
-    border:1px solid rgba(255,255,255,.08);
-
-    color:#fff;
+    color:white;
 
     margin-bottom:25px;
 
@@ -136,7 +104,7 @@ body::after{
 
 .left h1{
 
-    font-size:58px;
+    font-size:55px;
 
     line-height:1.1;
 
@@ -174,16 +142,12 @@ body::after{
 
     display:flex;
 
-    gap:20px;
+    flex-direction:column;
 
-    flex-wrap:wrap;
+    gap:20px;
 }
 
 .info-card{
-
-    flex:1;
-
-    min-width:180px;
 
     padding:22px;
 
@@ -216,20 +180,18 @@ body::after{
 
 .right{
 
-    padding:50px;
-
     display:flex;
 
-    align-items:center;
-
     justify-content:center;
+
+    align-items:center;
 }
 
 .calculator{
 
     width:100%;
 
-    max-width:430px;
+    max-width:420px;
 }
 
 /* ICONO */
@@ -237,26 +199,23 @@ body::after{
 .icon{
 
     width:100px;
-
     height:100px;
 
-    border-radius:30px;
+    border-radius:28px;
 
-    background:
-    linear-gradient(135deg,#f97316,#ef4444);
+    margin:auto auto 30px;
 
     display:flex;
-
     justify-content:center;
-
     align-items:center;
 
     font-size:50px;
 
-    margin:auto auto 30px;
+    background:
+    linear-gradient(135deg,#f97316,#ef4444);
 
     box-shadow:
-    0 15px 40px rgba(249,115,22,.45);
+    0 15px 40px rgba(249,115,22,.4);
 }
 
 /* TITULO */
@@ -267,9 +226,9 @@ body::after{
 
     color:white;
 
-    margin-bottom:35px;
+    font-size:42px;
 
-    font-size:34px;
+    margin-bottom:35px;
 }
 
 /* INPUTS */
@@ -285,11 +244,11 @@ body::after{
 
     margin-bottom:10px;
 
-    color:#e2e8f0;
+    color:#fff;
+
+    font-size:16px;
 
     font-weight:600;
-
-    font-size:15px;
 }
 
 .input-box input{
@@ -306,8 +265,6 @@ body::after{
 
     background:rgba(255,255,255,.07);
 
-    border:1px solid transparent;
-
     padding:0 18px;
 
     color:white;
@@ -322,20 +279,11 @@ body::after{
     background:rgba(255,255,255,.1);
 
     border:1px solid rgba(255,255,255,.18);
-
-    transform:scale(1.01);
 }
 
 .input-box input::placeholder{
+
     color:#94a3b8;
-}
-
-/* EVITA ZOOM */
-
-input,
-textarea,
-select{
-    font-size:16px;
 }
 
 /* BOTON */
@@ -361,56 +309,31 @@ button{
 
     cursor:pointer;
 
-    transition:.3s;
-
     margin-top:10px;
+
+    transition:.3s;
 }
 
 button:hover{
 
-    transform:translateY(-3px);
-
-    box-shadow:
-    0 10px 30px rgba(249,115,22,.45);
+    transform:translateY(-2px);
 }
 
 /* RESULTADO */
 
 .resultado{
 
-    margin-top:28px;
+    display:none;
+
+    margin-top:25px;
 
     padding:25px;
 
-    border-radius:25px;
+    border-radius:22px;
 
-    background:
-    linear-gradient(
-    135deg,
-    rgba(255,255,255,.08),
-    rgba(255,255,255,.03)
-    );
-
-    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.05);
 
     text-align:center;
-
-    display:none;
-
-    animation:fade .5s ease;
-}
-
-@keyframes fade{
-
-    from{
-        opacity:0;
-        transform:translateY(15px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .resultado h3{
@@ -422,9 +345,9 @@ button:hover{
 
 .resultado p{
 
-    font-size:40px;
-
     color:white;
+
+    font-size:34px;
 
     font-weight:800;
 
@@ -442,55 +365,28 @@ button:hover{
     color:#cbd5e1;
 
     line-height:1.8;
-
-    font-size:14px;
 }
 
 .formula strong{
 
     color:white;
-
-    font-size:18px;
 }
 
-/* RESPONSIVE TABLET */
-
-@media(max-width:950px){
-
-    .container{
-
-        grid-template-columns:1fr;
-    }
-
-    .left,
-    .right{
-
-        padding:40px;
-    }
-
-    .left h1{
-
-        font-size:46px;
-    }
-}
-
-/* RESPONSIVE CELULAR */
+/* RESPONSIVE */
 
 @media(max-width:768px){
 
     body{
-        padding:12px;
+        padding:0;
     }
 
     .container{
 
-        display:flex;
-
-        flex-direction:column;
-
         width:100%;
 
-        border-radius:28px;
+        border-radius:0;
+
+        min-height:100vh;
     }
 
     .left,
@@ -498,12 +394,12 @@ button:hover{
 
         width:100%;
 
-        padding:25px;
+        padding:28px;
     }
 
     .left h1{
 
-        font-size:36px;
+        font-size:40px;
     }
 
     .left p{
@@ -518,29 +414,20 @@ button:hover{
 
     .calculator h2{
 
-        font-size:28px;
-    }
-
-    .info-box{
-
-        flex-direction:column;
-    }
-
-    .info-card{
-
-        width:100%;
-    }
-
-    .resultado p{
-
-        font-size:28px;
+        font-size:30px;
     }
 
     .icon{
 
-        width:90px;
-        height:90px;
+        width:85px;
+        height:85px;
+
         font-size:42px;
+    }
+
+    .resultado p{
+
+        font-size:26px;
     }
 }
 
